@@ -66,12 +66,20 @@ class Caption:
 #        "At this time of year, it's usually [expected_weather_descriptor], but surprisingly it was [actual_temp]"
 #    ]
 
-    faces_singlar = [
-        "There is {women} women and {men} men facing the camera"
+    faces_singular = [
+        "There is {women} woman and {men} man facing the camera"
+    ]
+
+    faces_women_plural = [
+        "There are {women} women and {men} man facing the camera"
+    ]
+
+    faces_men_plural = [
+        "There is {women} woman and {men} men facing the camera"
     ]
 
     faces_plural = [
-        "There are {women} and {men} facing the camera"
+        "There are {women} women and {men} men facing the camera"
     ]
 
     celebrities_singular = [
@@ -161,12 +169,25 @@ class Caption:
             if DEBUG:
                 print("**Women key not present in kwargs")
             return None
-        if int(women) == 1:
-            template = random.choice(Caption.faces_singlar)
-            filled = self._fill(template) #, women=num2word(women))
-        elif int(women) > 1:
+        try:
+            men = self.kwargs['men']
+        except KeyError:
+            if DEBUG:
+                print("**Men not present in kwargs")
+            return None
+
+        if int(women) > 1 and int(men) > 1:
             template = random.choice(Caption.faces_plural)
             filled = self._fill(template) #, women=num2word(women))
+        elif int(women) > 1:
+            template = random.choice(Caption.faces_women_plural)
+            filled = self._fill(template) #, women=num2word(women))
+        elif int(men) > 1:
+            template = random.choice(Caption.faces_men_plural)
+            filled = self._fill(template)
+        else:
+            template = random.choice(Caption.faces_singular)
+            filled = self._fill(template)
         return filled
 
     def _get_celebrities(self):
