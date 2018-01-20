@@ -6,9 +6,14 @@ import numpy as np
 app = Flask(__name__, static_url_path='')
 
 
-@app.route('/')
-def hello():
-    return "HELLO"
+@app.route('/get_pic_url/')
+def get_pic_url():
+    return 'https://source.unsplash.com/random'
+
+
+@app.route('/get_caption/')
+def get_caption():
+    return 'This is a test caption\ntest test test'
 
 
 @app.route('/get_audio/')
