@@ -4,6 +4,7 @@ import cv2
 import numpy as np
 
 app = Flask(__name__, static_url_path='')
+app.run(host='0.0.0.0', port=8080)
 
 
 @app.route('/get_pic_url/')
