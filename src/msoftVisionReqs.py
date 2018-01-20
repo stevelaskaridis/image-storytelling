@@ -8,13 +8,13 @@ def load_subscription_key(path='../.azure_vision_api_key'):
 
 def describe_image(url, key, visual_features, detail, endpoint_url='https://westcentralus.api.cognitive.microsoft.com/'):
     """
-    :param visual_features: List of visual features for the Vision API to report in response (Categories,Description,Color)
+    :param visual_features: List of visual features for the Vision API to report in response (Categories,Description,Color,Tags)
     :param detail: None, Landmark or Celebrity
     """
     if url.split(':')[0].startswith('http'):
-        describe_image_by_url(url, key, visual_features, detail, endpoint_url)
+        return describe_image_by_url(url, key, visual_features, detail, endpoint_url)
     else:
-        describe_local_image(url, key, visual_features, detail, endpoint_url)
+        return describe_local_image(url, key, visual_features, detail, endpoint_url)
 
 def describe_image_by_url(image_url, key, visual_features, detail, endpoint_url='https://westcentralus.api.cognitive.microsoft.com/'):
     headers = {
@@ -58,6 +58,8 @@ def describe_image_by_url(image_url, key, visual_features, detail, endpoint_url=
         pp.pprint(data)
     except Exception as e:
         print("[Errno {0}] {1}".format(e.errno, e.strerror))
+        data = {}
+    return data
 
 def describe_local_image(image_path, key, visual_features, detail, endpoint_url='https://westcentralus.api.cognitive.microsoft.com/'):
     headers = {
@@ -98,14 +100,16 @@ def describe_local_image(image_path, key, visual_features, detail, endpoint_url=
         pp.pprint(data)
     except Exception as e:
         print("[Errno {0}] {1}".format(e.errno, e.strerror))
+        data = {}
+    return data
 
 if __name__ == '__main__':
     key = load_subscription_key()
     describe_image(url='http://cdn-image.travelandleisure.com/sites/default/files/styles/1600x1000/public/1487701021/eiffel-tower-paris-france-EIFFEL0217.jpg',
                    key=key,
-                   visual_features=['Categories', 'Description', 'Color'],
+                   visual_features=['Categories', 'Description', 'Color', 'Tags'],
                    detail='Landmark')
-    describe_image(url='/tmp/1200px-London-Eye-2009.JPG',
+    describe_image(url='../data/1200px-London-Eye-2009.JPG',
                    key=key,
-                   visual_features=['Categories', 'Description', 'Color'],
+                   visual_features=['Categories', 'Description', 'Color', 'Tags'],
                    detail='Landmark')
