@@ -1,5 +1,6 @@
 .azure_vision_api_key
 .bing_api_key
+.foursquare_api_key
 # Created by https://www.gitignore.io/api/python
 
 ### Python ###
