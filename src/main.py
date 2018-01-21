@@ -105,7 +105,11 @@ def get_caption_from_image(url):
         key=darksky_key)
     temperature = weather_tags['currently']['temperature']
 
-    celebrities = extract_celebrities(vision_tags['categories'])
+    if 'categories' in vision_tags:
+        celebrities = extract_celebrities(vision_tags['celebrities'])
+    else:
+        celebrities = None
+        
     if celebrities:
         # captioning
         caption_args = {
