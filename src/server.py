@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, send_file
 import urllib
 #import cv2
 import numpy as np
@@ -41,16 +41,16 @@ def get_caption(id):
 
 @app.route('/get_audio/<id>')
 def get_audio(id):
-    image_id = request.args.get('id')
-    return app.send_static_file('audio_caption.mp3')
+    image_id = id
+    # return app.send_static_file('../data/caption_{}.mp3'.format(image_id))
+    return send_file('../data/hello_world.mp3', mimetype='audio/mpeg')
 
 @app.route('/get_image/<id>')
 def get_image(id):
     #image_id = request.args.get('id')
     image_id = id
     image_id = validate_image_or_random(image_id)
-    image = open("../data/image_{}.jpg".format(image_id), 'rb').read()
-    return image
+    return send_file("../data/image_{}.jpg".format(image_id), mimetype='image/jpg')
 
 
 # @app.route('/get_colours/', methods=['GET'])
