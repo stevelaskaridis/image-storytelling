@@ -2,6 +2,8 @@ from flask import Flask, request
 import urllib
 import cv2
 import numpy as np
+import main
+import os
 
 app = Flask(__name__, static_url_path='')
 #app.run(host='0.0.0.0', port=80)
@@ -16,20 +18,38 @@ images = {}
 captions = {}
 audio = {}
 
-@app.route('/get_caption/<id>')
-def get_caption(id):
+# files = os.listdir('../data/')
+# filemame = random.choice(files)
+# caption = main.get_caption_from_image(filename)
+# with open(filename,'rb') as f:
+#     image = read(f)
 
-    return 'This is a test caption\ntest test test'
+def validate_image_or_random(image_id):
+    images = os.listdir('../data')
+    if "image_{}.jpg".format(image_id) in images:
+        return image_id
+    else
+        return random_choice(images).split('_')[1].split('.')[0]
+
+@app.route('/get_caption/<id>')
+def get_caption():
+    image_id = request.args.get('id')
+    caption = main.get_caption_from_image("../data/image_{}.jpg".format(image_id))
+    return caption
 
 
 @app.route('/get_audio/<id>')
 def get_audio(id):
+    image_id = request.args.get('id')
     return app.send_static_file('audio_caption.mp3')
 
 @app.route('/get_image/<id>')
-def_get_image(id):
-    #TODO
-    pass
+def_get_image(image_id):
+    image_id = request.args.get('id')
+    image_id = validate_image_or_random(image_id)
+    with open("../data/image_{}.jpg".format(image_id), 'rb') as f:
+        image = f
+    return f
 
 
 # @app.route('/get_colours/', methods=['GET'])
