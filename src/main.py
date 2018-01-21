@@ -64,7 +64,7 @@ def extract_celebrities(categories):
                 break
     return set(names)
 
-def get_caption_from_image(url)
+def get_caption_from_image(url):
     # Microsoft Vision
     vision_key = msoftVisionReqs.load_subscription_key()
     vision_tags = msoftVisionReqs.describe_image(url=url, key=vision_key,
