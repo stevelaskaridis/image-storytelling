@@ -1,5 +1,6 @@
 import random
 import nltk
+from helpers import num_as_word
 # import num2word
 
 # Starting template:
@@ -70,11 +71,27 @@ class Caption:
         "There is {women} woman and {men} man facing the camera"
     ]
 
-    faces_women_plural = [
-        "There are {women} women and {men} man facing the camera"
+    faces_men_singular = [
+        "There is {men} man facing the camera"
     ]
 
     faces_men_plural = [
+        "There is {men} men facing the camera"
+    ]
+
+    faces_women_singular = [
+        "There are {men} woman facing the camera"
+    ]
+    
+    faces_women_plural = [
+        "There are {women} women facing the camera"
+    ]
+
+    faces_women_plural_men_singular = [
+        "There are {women} women and {men} man facing the camera"
+    ]
+
+    faces_women_singular_men_plural = [
         "There is {women} woman and {men} men facing the camera"
     ]
 
@@ -176,18 +193,33 @@ class Caption:
                 print("**Men not present in kwargs")
             return None
 
-        if int(women) > 1 and int(men) > 1:
-            template = random.choice(Caption.faces_plural)
-            filled = self._fill(template) #, women=num2word(women))
-        elif int(women) > 1:
-            template = random.choice(Caption.faces_women_plural)
-            filled = self._fill(template) #, women=num2word(women))
-        elif int(men) > 1:
-            template = random.choice(Caption.faces_men_plural)
-            filled = self._fill(template)
+        women = int(women)
+        men = int(men)
+        women_word = num_as_word(women)
+        men_word = num_as_word(men)
+
+        if women == 0:
+            if men == 0:
+                return None
+            elif men == 1:
+                template = random.choice(Caption.faces_men_singular)
+            else: # > 1
+                template = random.choice(Caption.faces_men_plural)
+        elif women == 1:
+            if men == 0:
+                template = random.choice(Caption.faces_women_singular)
+            elif men == 1:
+                template = random.choice(Caption.faces_singular)
+            elif men > 1:
+                template = random.choice(Caption.faces_women_singular_men_plural)
         else:
-            template = random.choice(Caption.faces_singular)
-            filled = self._fill(template)
+            if men == 0:
+                template = random.choice(Caption.faces_women_plural)
+            elif men == 1:
+                template = random.choice(Caption.faces_women_plural_men_singular)
+            else:
+                template = random.choice(Caption.faces_plural)
+        filled = self._fill(template, women=women_word, men = men_word)
         return filled
 
     def _get_celebrities(self):
