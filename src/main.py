@@ -133,3 +133,4 @@ def get_caption_from_image(url):
 
     cap_obj = Caption(**caption_args)
     print(cap_obj.get_caption())
+    return cap_obj.get_caption()
