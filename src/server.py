@@ -42,7 +42,7 @@ def get_caption(id):
 @app.route('/get_audio/<id>')
 def get_audio(id):
     image_id = id
-    main.audio_from_caption(get_caption(id), "../data/caption_{}.mp3".format(id))
+    main.audio_from_caption(id="../data/caption_{}.mp3".format(id), caption=get_caption(id))
     return send_file("../data/caption_{}.mp3".format(id), mimetype='audio/mpeg')
 
 @app.route('/get_image/<id>')

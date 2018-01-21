@@ -26,7 +26,7 @@
 #         conn.request(method="POST", url='/sts/v1.0/issueToken', headers=headers, body="")
 #         response = conn.getresponse()
 #         return response.read()
-        
+
 #         # response = requests.post(url='',
 #         #                         headers = headers,
 #         #                         body=""
@@ -37,7 +37,7 @@
 #     except requests.RequestException as e:
 #         print("[Errno {0}] {1}".format(e.errno, e.strerror))
 #         raise Exception("Could not retrieve authorization from speech key")
-    
+
 
 
 
@@ -82,6 +82,6 @@ def text_to_speech(text, filename, speedup=30):
     if not filename.endswith('.mp3'):
         filename += '.mp3'
     subprocess.call(['./msft_speech_download.sh "{0}" "{1}" "{2}"'.format(text, filename, speedup)], shell=True)
-    
+
 if __name__ == '__main__':
     text_to_speech("This photo was taken in early January 2016 in London. The London Eye is nearby. There is a large ferris wheel by a river. It was a hot afternoon. There is one woman and one man facing the camera.", "caption_1.mp3")

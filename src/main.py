@@ -138,4 +138,4 @@ def get_caption_from_image(url):
 
 
 def audio_from_caption(id, caption):
-    return msoftSpeechReqs.text_to_speech(caption, id)
+    return msoftSpeechReqs.text_to_speech(text=caption, filename=id)
