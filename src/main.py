@@ -64,7 +64,7 @@ def extract_celebrities(categories):
                 break
     return set(names)
 
-def get_caption_from_image(url)
+def get_caption_from_image(url):
     # Microsoft Vision
     vision_key = msoftVisionReqs.load_subscription_key()
     vision_tags = msoftVisionReqs.describe_image(url=url, key=vision_key,
@@ -73,7 +73,7 @@ def get_caption_from_image(url)
     people = vision_tags['faces']
     males, females = count_men_and_women(people)
     # EXIF tags
-    exif_tags = exifExtractor.extract_exif_data(image_path)
+    exif_tags = exifExtractor.extract_exif_data(url)
     longitude = str(exif_tags['GPS GPSLongitude']).strip('[').strip(']').split(',')
     longitudeType = str(exif_tags['GPS GPSLongitudeRef'])
     longitude = '-'.join(longitude)+longitudeType
@@ -133,3 +133,4 @@ def get_caption_from_image(url)
 
     cap_obj = Caption(**caption_args)
     print(cap_obj.get_caption())
+    return cap_obj.get_caption()

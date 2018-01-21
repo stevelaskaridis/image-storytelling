@@ -22,7 +22,8 @@ def get_location_data(latitude,longitude, client_id, client_secret, radius=100,
     try:
         response = requests.get("{endpoint}".format(endpoint=endpoint_url),
                                 params=params)
-        data = json.loads(response.text.encode('ascii', errors='ignore'))
+        data = response.json()
+        # data = json.loads(response.text.encode('ascii', errors='ignore'))
 
         if DEBUG:
             import pprint
