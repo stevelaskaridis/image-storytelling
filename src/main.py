@@ -71,8 +71,11 @@ def get_caption_from_image(url):
     vision_tags = msoftVisionReqs.describe_image(url=url, key=vision_key,
                                                  visual_features=['Categories', 'Description', 'Color', 'Tags', 'Faces'],
                                                  detail='landmark')
-    people = vision_tags['faces']
-    males, females = count_men_and_women(people)
+    if vision_tags.get('faces'):
+        people = vision_tags['faces']
+        males, females = count_men_and_women(people)
+    else:
+        males, females = 0, 0
     # EXIF tags
     exif_tags = exifExtractor.extract_exif_data(url)
     longitude = str(exif_tags['GPS GPSLongitude']).strip('[').strip(']').split(',')
