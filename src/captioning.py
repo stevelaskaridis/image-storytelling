@@ -124,15 +124,21 @@ class Caption:
             sentence = getter()
             if sentence is not None:
                 caption_sentences.append(sentence)
-        caption = ". ".join(caption_sentences)
-        return caption + "."
+        caption = ".\n".join(caption_sentences)
+        return caption + ".\n"
 
 
     def _fill(self, template, **override_kwargs):
+
         # merge in other values from self.kwargs
         for (key, val) in self.kwargs.items():
             if key not in override_kwargs:
                 override_kwargs[key] = val
+
+        # kill all falsy values
+        for (key, val) in override_kwargs.keys():
+            if not val:
+                del override_kwargs[key]
         try:
             filled = template.format(**override_kwargs)
             return filled
