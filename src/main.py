@@ -64,11 +64,10 @@ def extract_celebrities(categories):
                 break
     return set(names)
 
-if __name__ == '__main__':
-    image_path = '../data/s7_image.jpg'
+def get_caption_from_image(url)
     # Microsoft Vision
     vision_key = msoftVisionReqs.load_subscription_key()
-    vision_tags = msoftVisionReqs.describe_image(url=image_path, key=vision_key,
+    vision_tags = msoftVisionReqs.describe_image(url=url, key=vision_key,
                                                  visual_features=['Categories', 'Description', 'Color', 'Tags', 'Faces'],
                                                  detail='landmark')
     people = vision_tags['faces']
