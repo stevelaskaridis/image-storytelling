@@ -15,6 +15,23 @@ def get_pic_url():
     return 'https://source.unsplash.com/random'
 
 
+images_dir = "../data"
+all_images = os.listdir(images_dir)
+mapping = [None]*len(all_images)
+ptr = 0
+
+def get_image_for_id(id):
+    global ptr
+    try:
+        index = mapping.index(id)
+        return all_images[index]
+    except Exception:
+        mapping[ptr] = id
+        ptr += 1
+        return all_images[ptr-1]
+            
+
+
 images = {}
 captions = {}
 audio = {}
@@ -34,8 +51,8 @@ def validate_image_or_random(image_id):
 
 @app.route('/get_caption/<id>')
 def get_caption(id):
-    image_id = id
-    caption = main.get_caption_from_image("../data/image_{}.jpg".format(image_id))
+    image_id = int(id)
+    caption = main.get_caption_from_image("../data/" + get_image_for_id(image_id))
     return caption
 
 
@@ -48,9 +65,9 @@ def get_audio(id):
 @app.route('/get_image/<id>')
 def get_image(id):
     #image_id = request.args.get('id')
-    image_id = id
-    image_id = validate_image_or_random(image_id)
-    return send_file("../data/image_{}.jpg".format(image_id), mimetype='image/jpg')
+    image_id = int(id)
+    #image_id = validate_image_or_random(image_id)
+    return send_file("../data/ " + get_image_for_id(image_id), mimetype='image/jpg')
 
 
 # @app.route('/get_colours/', methods=['GET'])
