@@ -3,7 +3,7 @@ text=$1
 filename=$2
 speedup=$3
 
-apiKey="Ocp-Apim-Subscription-Key:fa1a1cd6b1f2454087a43290a07671b8"
+apiKey="Ocp-Apim-Subscription-Key: $(cat ../.bing_speech_api_key)"
 
 authToken=`curl --header $apiKey --header "Content-Length:0" -X POST https://api.cognitive.microsoft.com/sts/v1.0/issueToken`
 
