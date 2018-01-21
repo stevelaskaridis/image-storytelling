@@ -4,6 +4,7 @@ import darkskyWeather
 import exifExtractor
 import foursquareGeolocation
 import msoftVisionReqs
+import msoftSpeechReqs
 
 import datetime
 
@@ -134,3 +135,7 @@ def get_caption_from_image(url):
     cap_obj = Caption(**caption_args)
     print(cap_obj.get_caption())
     return cap_obj.get_caption()
+
+
+def audio_from_caption(id, caption):
+    return msoftSpeechReqs.text_to_speech(caption, id)
