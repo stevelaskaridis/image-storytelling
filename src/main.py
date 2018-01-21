@@ -73,7 +73,7 @@ def get_caption_from_image(url):
     people = vision_tags['faces']
     males, females = count_men_and_women(people)
     # EXIF tags
-    exif_tags = exifExtractor.extract_exif_data(image_path)
+    exif_tags = exifExtractor.extract_exif_data(url)
     longitude = str(exif_tags['GPS GPSLongitude']).strip('[').strip(']').split(',')
     longitudeType = str(exif_tags['GPS GPSLongitudeRef'])
     longitude = '-'.join(longitude)+longitudeType
