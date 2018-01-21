@@ -78,8 +78,10 @@
 import subprocess
 import os
 
-def text_to_speech(text, filename):
-    subprocess.call(['./msft_speech_download.sh "{0}" "{1}"'.format(text, filename)], shell=True)
+def text_to_speech(text, filename, speedup=30):
+    if not filename.endswith('.mp3'):
+        filename += '.mp3'
+    subprocess.call(['./msft_speech_download.sh "{0}" "{1}" "{2}"'.format(text, filename, speedup)], shell=True)
     
 if __name__ == '__main__':
-    text_to_speech("Hello world new", "hello_world_new.mp3")
+    text_to_speech("This photo was taken in early January 2016 in London. The London Eye is nearby. There is a large ferris wheel by a river. It was a hot afternoon. There is one woman and one man facing the camera.", "caption_1.mp3")
